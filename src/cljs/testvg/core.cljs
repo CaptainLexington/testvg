@@ -86,8 +86,6 @@
 (def vgteam-tv-shows-data
   (reagent/atom []))
 
-(def vgteam-tv-shows-quality-data
-  (reagnet/atom []))
 
 (defn api-url
   [category endpoint]
@@ -112,30 +110,13 @@
                                       (time/minus (time/now) (time/hours 1)))
                 }}
       vgteam-tv-shows-data))
-    
-(defn update-tv-show-quality-data
-  []
-  (put-api-data-in-atom
-      (api-url "statistics" "quality")
-      {:params {:project_id "vgteam-TV_Shows"
-                :granularity "minute"
-                :timeFrom (tf/unparse
-                                      time-format
-                                      (time/minus (time/now) (time/hours 1)))
-                }}
-      vgteam-tv-shows-data))
-    
+  
 (update-tv-show-data)
 
-(update-tv-show-quality-data)
-  
 (js/setInterval
   update-tv-show-data
   60000)
 
-(js/setInterval
-  update-tv-show-quality-data
-  60000)
   
 
 ;; -------------------------
